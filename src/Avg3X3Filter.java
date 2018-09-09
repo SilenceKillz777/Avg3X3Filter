@@ -13,7 +13,7 @@ public class Avg3X3Filter {
 		int numCols = 0;
 		int minVal = 0;
 		int maxVal = 0;
-		
+		//here
 		Scanner inFile = new Scanner(new File("Avg3X3Filter_Data1.txt"));
 		if(inFile.hasNextLine())
 			str = new StringTokenizer(inFile.nextLine());
@@ -49,7 +49,7 @@ class imageProcessing {
 	void mirrorFramed(int numRows, int numCols){
 		for(int numRow=0;numRow<numRows;numRow++) {
 			for(int numCol=0;numCol<numCols;numCol++ ) {
-				// need more work
+				// need more work here
 			}
 		}
 	}
