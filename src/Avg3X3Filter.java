@@ -22,8 +22,8 @@ public class Avg3X3Filter {
 		numCols = Integer.parseInt(str.nextToken());
 		minVal = Integer.parseInt(str.nextToken());
 		maxVal = Integer.parseInt(str.nextToken());
-		imageProcessing a = new imageProcessing(numRows,numCols,minVal,maxVal);
-		a.print();
+		imageProcessing processor = new imageProcessing(numRows,numCols,minVal,maxVal);
+		processor.print();
 	}
 	
 }
