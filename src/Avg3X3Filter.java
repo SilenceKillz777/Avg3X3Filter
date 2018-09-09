@@ -49,7 +49,7 @@ class imageProcessing {
 	void mirrorFramed(int numRows, int numCols){
 		for(int numRow=0;numRow<numRows;numRow++) {
 			for(int numCol=0;numCol<numCols;numCol++ ) {
-				
+				// need work
 			}
 		}
 	}
