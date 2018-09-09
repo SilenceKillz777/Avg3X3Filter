@@ -1,0 +1,192 @@
+
+Project 1: You are to write a few image processing methods: including, histogram, threshold, 
+	and  3X3 averaging filter
+
+**************************************
+Language: Java
+Due date: Java soft copy:  9/12/2018 Monday before Midnight
+Due date: Java hard copy:  9/13/2018 Thursdayday in class
+
+*************************************
+
+I. Input1 (argv[0]): a txt file representing a grey-scale image with header.
+   Input2 (argv[1]): threshold value 
+	
+II. Output1(argv[2]): The histogram of the input image
+    Output2(argv[3]): the result of thresholded  image
+
+ 	
+*******************************
+III. Data structure:
+*******************************
+ - imageProcessing class
+   
+	- numRows (int)
+	- numCols (int)
+	- minVal (int)
+	- maxVal (int)
+	- newMin (int)
+	- newMax (int)
+ 
+	- imgInAry (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows by numCols
+	- imgOutAry (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows by numCols
+
+	- mirrorFramedAry (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows + 2 by numCols + 2.
+
+	- tempAry (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows + 2 by numCols + 2.
+
+	- hist(int*) //a 1D integer array, size of maxVal + 1
+			// need to be dynamically allocated at run time.
+
+
+	- neighborAry[9](int) 1 D array for storing the 3 x 3 neighbors of pixel (i,j)
+
+ 
+    - methods:
+	- constructor(s) // need to dynamically allocate the two (2-D) arrays 
+				and assign values to numRows,..., etc.
+
+	- mirrorFramed // mirrow framing the image as taught in class
+
+	- loadImage (imgInAry, mirrorFramedAry) 
+		// read from input file and load onto imgInAry and mirrorFramedAry
+
+	- loadNeighbors // load the 3 x 3 neighbors of given pixel(i,j)into neightAry
+
+	- ComputeHistogram(ary)
+)
+	- printHist(hist) 
+		//the histogram of the input image, use the format below:
+		// first text line is the image header (the four numbers as in the input image), 
+		// then follows by a list of pairs: greyScale numPixels 
+		// two numbers per text line; for example, 
+		// the output of the histogram of the above image would be:
+	
+      4 6 1 12 
+	0  0
+	1  3 
+	2  3
+	3  1
+	4  2
+	5  2
+	6  2
+	7  1
+	8  0
+	9  6
+	10 1
+	11 2
+	12 1
+
+	- computeAVG3X3 (ary)
+     - Avg3x3(neighborAry)
+		// compute the averaging of neighborAry 
+
+	- computThreshold (ary)
+	- prettyPrint (ary)
+	
+ 	      
+*******************************
+III. Main( )
+*******************************
+  
+step 0: - open the input file and output file
+	  - read the image header, the four numbers
+	  - dynamically allocate all 1-D and 2-D array
+	   
+	  - thr_value <-- read from argv[1]
+
+step 1: loadImage (imgInAry, mirrorFramedAry) 
+		// read from input file and load onto imgInAry begins at [0][0]
+           // and load onto mirrorFramedAry begin at [1,1]
+
+step 2: ComputeHistogram(imgInAry, hist, maxVal)
+
+step 3: printHist(hist) // see the format in the above.
+
+step 4: mirrowFramed (mirrorFramedAry) // Use the algorithm given in class
+
+step 5: computeAVG3X3 (mirrorFramedAry,  tempAry) // see algorithm below
+
+Step 6: computThreshold (tempAry,imgOutAry)
+
+Step 7: prettyPrint (imgOutAry)
+	
+step 8: output the image header (numRows, numCols, newMin, newMax) 
+	to Output2(argv[3]): the result of thresholded  image
+
+step 9: output tempAry, begin at [1,1], within the frame, to Output2(argv[3])
+	   
+step 10: close all files
+
+*******************************
+VI. computeHistogram(imgInAry, maxVal, hist )
+*******************************
+  	   
+step 1: dynamically allocate the hist array size maxVal+1 and initialize to 0
+
+step 2: // process imgInAryfrom left to right and top to bottom
+      
+	p(i,j) <- next pixel
+	hist[p(i,j)]++
+
+step 3: repeat step 2 until all pixels are processed.
+
+
+**************************************
+IV. computeAVG3X3 (mirrorFramedAry,  tempAry)
+**************************************
+
+step 1: process the MirrorframedAry, from left to right and top to bottom
+	  using i, and j, begin at (1, 1) until one before the last row.
+	  
+	 p(i,j) <-- next pixel
+
+Step 2: loadNeighbors (neighborAry) 
+	// load the 3 x 3 neighbors of p(i,j)into neightAry
+
+step 3: tempAry(i,j) <-- Avg3x3(neighborAry)
+		// compute the averaging of neighborAry 
+	  
+	  - keep tracking the newMin and newMax of tempAry
+
+step 4: repeat step 1 - step3  until all pixels inside of the framed are processed
+
+
+*******************************
+VI. computeThreshold(MirrorframedAry, imgOutAry, thr_value)
+*******************************
+
+step 1: process the MirrorframedAry, from left to right and top to bottom
+	  using i, and j, begin at (1, 1) until one before the last row.
+	  
+	 p(i,j) <-- next pixel
+
+	if (p(i,j)>= thr_value
+		imgOutAry(i,j) <--  1
+	else 
+		imgOutAry(i,j) <--  0
+
+step 2: repeat step 1 until all pixels are processed.
+
+
+*************************************
+III. prettyPrint (imgOutAry)
+*************************************
+  	
+step 1: outFile <-- open Output2(argv[3]
+	         
+step 2: // process imgOutAry from left to right and top to bottom
+      
+	p(i,j) <- next pixel
+	if p(i,j) > 0
+        output p(i,j) to outFile 
+     else        
+	   output '  ' // 2 blanks to outFile
+
+step 3: repeat step 2 until all pixels are processed.
+ 	
+

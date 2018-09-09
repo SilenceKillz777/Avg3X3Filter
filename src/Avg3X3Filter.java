@@ -1,0 +1,61 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+public class Avg3X3Filter {
+
+	public static void main(String[] argv) throws IOException{
+		
+		//String line;
+		StringTokenizer str = null;
+		int numRows = 0;
+		int numCols = 0;
+		int minVal = 0;
+		int maxVal = 0;
+		
+		Scanner inFile = new Scanner(new File("Avg3X3Filter_Data1.txt"));
+		if(inFile.hasNextLine())
+			str = new StringTokenizer(inFile.nextLine());
+			
+		numRows = Integer.parseInt(str.nextToken());
+		numCols = Integer.parseInt(str.nextToken());
+		minVal = Integer.parseInt(str.nextToken());
+		maxVal = Integer.parseInt(str.nextToken());
+		imageProcessing a = new imageProcessing(numRows,numCols,minVal,maxVal);
+		a.print();
+	}
+	
+}
+	
+class imageProcessing {
+	int numRows, numCols, minVal, maxVal, newMin, newMax;
+	int[][] imgInAry, imgOutAry, mirrorFramedAry, tempAry;
+	int[] hist, neighborAry;
+	
+	imageProcessing(int numRows,int numCols,int minVal,int maxVal){
+		this.numRows = numRows;
+		this.numCols = numCols;
+		this.minVal = minVal;
+		this.maxVal = maxVal;
+		int imgInAry[][] = new int [numRows][numCols];
+		int imgOutAry[][] = new int [numRows][numCols];
+		int mirrorFramedAry[][] = new int [numRows+2][numCols+2];
+		int tempAry[][] = new int [numRows+2][numCols+2];
+		int hist[] = new int[maxVal+1];
+		int neighborAry[] = new int[9];
+	}
+	
+	void mirrorFramed(int numRows, int numCols){
+		for(int numRow=0;numRow<numRows;numRow++) {
+			for(int numCol=0;numCol<numCols;numCol++ ) {
+				
+			}
+		}
+	}
+		
+	void print(){
+		System.out.println(numRows + " " + numCols + " " + minVal + " " + maxVal);
+	}
+}
+
