@@ -21,9 +21,12 @@ public class Avg3X3Filter {
 		maxVal = Integer.parseInt(str.nextToken());
 		imageProcessing processor = new imageProcessing(numRows,numCols,minVal,maxVal,inFile);
 		int[][] imgInAry = new int[numRows][numCols], mirrorFramedAry = new int[numRows+2][numCols+2];
+		int[] hist = new int[maxVal+1];
 		
-		processor.printHeader();
+		//processor.printHeader();
 		processor.loadImage(imgInAry,mirrorFramedAry);
+		processor.ComputeHistogram(imgInAry, hist, maxVal);
+		processor.printHist(hist);
 		processor.mirrorFramed(numRows, numCols, mirrorFramedAry);
 		//Test 11:33
 	}
@@ -61,6 +64,20 @@ class imageProcessing {
         
     }
 	
+	void ComputeHistogram(int[][] imgInAry, int[] hist,int maxVal) {
+		System.out.println(numRows + " " + numCols + " " + minVal + " " + maxVal);
+		for(int i=0;i<numRows;i++){
+			for(int j=0;j<numCols;j++) {
+				hist[imgInAry[i][j]] = hist[imgInAry[i][j]]+1;
+			}
+		}
+	}
+	
+	void printHist(int[] hist) {
+		for(int i=0;i<maxVal+1;i++)
+			System.out.println(i + " " + hist[i]);
+	}
+	
 	void mirrorFramed(int numRows, int numCols,int[][] mirrorFramedAry){
 		for(int i=0;i<numRows;i++) {
 			for(int j=0;j<numCols;j++) {
@@ -79,9 +96,6 @@ class imageProcessing {
 		}
 		*/
 	}
-		
-	void printHeader(){
-		System.out.println(numRows + " " + numCols + " " + minVal + " " + maxVal);
-	}
+
 }
 
