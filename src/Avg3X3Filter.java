@@ -76,6 +76,7 @@ class imageProcessing {
 				mirrorFramedAry[numRow+1][numCol+1] = imgInAry[numRow][numCol];
 			}
 		}
+		
 		/*
 		for(int i=0;i<numRows+2;i++){
 			for(int j=0;j<numCols+2;j++){
