@@ -1,3 +1,6 @@
+//Steven Yu
+//CS381 - Image Processing
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,13 +15,14 @@ public class Avg3X3Filter {
 		StringTokenizer str = null;
 		int numRows = 0, numCols = 0, minVal = 0, maxVal = 0;
 		
-		Scanner inFile = new Scanner(new File(argv[0]));
-		PrintWriter histogram = new PrintWriter(new FileWriter(argv[2]));
-		PrintWriter outFile = new PrintWriter(new FileWriter(argv[3]));
+		Scanner inFile = new Scanner(new File(argv[0]));	//read in data
+		PrintWriter histogram = new PrintWriter(new FileWriter(argv[2]));	//write to histogram.txt
+		PrintWriter outFile = new PrintWriter(new FileWriter(argv[3]));		//write to Thresholded_image.txt
 
 		if(inFile.hasNextLine())
 			str = new StringTokenizer(inFile.nextLine());
-			
+		
+		//retrieve header information
 		numRows = Integer.parseInt(str.nextToken());
 		numCols = Integer.parseInt(str.nextToken());
 		minVal = Integer.parseInt(str.nextToken());
@@ -35,6 +39,7 @@ public class Avg3X3Filter {
 		processor.computeAVG3X3(mirrorFramedAry, tempAry);
 		processor.computeThreshold(mirrorFramedAry, imgOutAry, thr_value);
 		
+		//print results
 		processor.printHist(hist);
 		processor.prettyPrint (imgOutAry);
 	}

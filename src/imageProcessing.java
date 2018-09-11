@@ -1,3 +1,6 @@
+//Steven Yu
+//CS381 - Image Processing
+
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -8,6 +11,7 @@ public class imageProcessing {
 	Scanner inFile;
 	PrintWriter outFile, histogram;
 	
+	//Constructor
 	imageProcessing(int numRows,int numCols,int minVal,int maxVal, Scanner inFile, PrintWriter outFile, PrintWriter histogram){
 		this.numRows = numRows;
 		this.numCols = numCols;
@@ -26,6 +30,7 @@ public class imageProcessing {
 		this.histogram = histogram;
 	}
 	
+	//Methods
 	void loadImage(int[][] imgInAry,int[][] mirrorFramedAry) {
         for(int i=0;i<numRows;i++) {
             for(int j=0;j<numCols;j++) {
@@ -53,10 +58,10 @@ public class imageProcessing {
 	void mirrorFramed(int numRows, int numCols,int[][] mirrorFramedAry){
 		for(int i=0;i<numRows;i++) {
 			for(int j=0;j<numCols;j++) {
-				mirrorFramedAry[0][j] = mirrorFramedAry[1][j];
-				mirrorFramedAry[numRows+1][j] = mirrorFramedAry[numRows][j];
-				mirrorFramedAry[i][0] = mirrorFramedAry[i][1];
-				mirrorFramedAry[i][numCols+1] = mirrorFramedAry[i][numCols];
+				mirrorFramedAry[0][j] = mirrorFramedAry[1][j];					//mirror top
+				mirrorFramedAry[numRows+1][j] = mirrorFramedAry[numRows][j];	//mirror bottom
+				mirrorFramedAry[i][0] = mirrorFramedAry[i][1];					//mirror left
+				mirrorFramedAry[i][numCols+1] = mirrorFramedAry[i][numCols];	//mirror right
 			}
 		}
 	}
@@ -65,15 +70,15 @@ public class imageProcessing {
 		for(int i=1;i<numRows+1;i++) {
 			for(int j=1;j<numCols+1;j++) {
 				int sum = 0;
-				neighborAry[0] = mirrorFramedAry[i][j];
-				neighborAry[1] = mirrorFramedAry[i-1][j-1];
-				neighborAry[2] = mirrorFramedAry[i][j-1];
-				neighborAry[3] = mirrorFramedAry[i+1][j-1];
-				neighborAry[4] = mirrorFramedAry[i-1][j];
-				neighborAry[5] = mirrorFramedAry[i+1][j];
-				neighborAry[6] = mirrorFramedAry[i-1][j+1];
-				neighborAry[7] = mirrorFramedAry[i][j+1];
-				neighborAry[8] = mirrorFramedAry[i+1][j+1];
+				neighborAry[0] = mirrorFramedAry[i][j];			//center
+				neighborAry[1] = mirrorFramedAry[i-1][j-1];		//top-left
+				neighborAry[2] = mirrorFramedAry[i][j-1];		//middle-left
+				neighborAry[3] = mirrorFramedAry[i+1][j-1];		//bottom-left
+				neighborAry[4] = mirrorFramedAry[i-1][j];		//top-middle
+				neighborAry[5] = mirrorFramedAry[i+1][j];		//bottom-middle
+				neighborAry[6] = mirrorFramedAry[i-1][j+1];		//top-right
+				neighborAry[7] = mirrorFramedAry[i][j+1];		//middle-right
+				neighborAry[8] = mirrorFramedAry[i+1][j+1];		//bottom-right
 				for(int k=0;k<9;k++) {
 					sum += neighborAry[k];
 				}
@@ -95,6 +100,7 @@ public class imageProcessing {
 			}
 		}
 	}
+	
 	void prettyPrint(int[][] imgOutAry) {
 		outFile.println(numRows + " " + numCols + " " + newMin + " " + newMax);
 		for(int i=0;i<numRows;i++) {
