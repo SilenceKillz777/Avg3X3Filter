@@ -6,27 +6,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class Avg3X3Filter {
 
 	public static void main(String[] argv) throws IOException{
 		
-		StringTokenizer str = null;
 		int numRows = 0, numCols = 0, minVal = 0, maxVal = 0;
 		
 		Scanner inFile = new Scanner(new File(argv[0]));	//read in data
 		PrintWriter histogram = new PrintWriter(new FileWriter(argv[2]));	//write to histogram.txt
 		PrintWriter outFile = new PrintWriter(new FileWriter(argv[3]));		//write to Thresholded_image.txt
 
-		if(inFile.hasNextLine())
-			str = new StringTokenizer(inFile.nextLine());
-		
 		//retrieve header information
-		numRows = Integer.parseInt(str.nextToken());
-		numCols = Integer.parseInt(str.nextToken());
-		minVal = Integer.parseInt(str.nextToken());
-		maxVal = Integer.parseInt(str.nextToken());
+		numRows = Integer.parseInt(inFile.next());
+		numCols = Integer.parseInt(inFile.next());
+		minVal = Integer.parseInt(inFile.next());
+		maxVal = Integer.parseInt(inFile.next());
 		
 		imageProcessing processor = new imageProcessing(numRows,numCols,minVal,maxVal,inFile,outFile,histogram);
 		int[][] imgInAry = new int[numRows][numCols], mirrorFramedAry = new int[numRows+2][numCols+2], tempAry = new int[numRows+2][numCols+2], imgOutAry = new int [numRows][numCols];
