@@ -9,10 +9,10 @@ public class imageProcessing {
 	int[][] imgInAry, imgOutAry, mirrorFramedAry, tempAry;
 	int[] hist, neighborAry;
 	Scanner inFile;
-	PrintWriter outFile, histogram;
+	PrintWriter outFile, prettyPrint, histogram;
 	
 	//Constructor
-	imageProcessing(int numRows,int numCols,int minVal,int maxVal, Scanner inFile, PrintWriter outFile, PrintWriter histogram){
+	imageProcessing(int numRows,int numCols,int minVal,int maxVal, Scanner inFile, PrintWriter outFile, PrintWriter prettyPrint, PrintWriter histogram){
 		this.numRows = numRows;
 		this.numCols = numCols;
 		this.minVal = minVal;
@@ -27,6 +27,7 @@ public class imageProcessing {
 		neighborAry = new int[9];
 		this.inFile = inFile;
 		this.outFile = outFile;
+		this.prettyPrint = prettyPrint;
 		this.histogram = histogram;
 	}
 	
@@ -91,25 +92,33 @@ public class imageProcessing {
 		}
 	}
 	
-	void computeThreshold(int[][] mirrorFramedAry, int[][] imgOutAry, int thr_value) {
+	void computeThreshold(int[][] tempAry, int[][] imgOutAry, int thr_value) {
+		outFile.println(numRows + " " + numCols + " " + newMin + " " + newMax);
 		for(int i=1;i<numRows+1;i++) {
 			for(int j=1;j<numCols+1;j++) {
-				if(mirrorFramedAry[i][j]>=thr_value)
+				if(tempAry[i][j]>=thr_value)
 					imgOutAry[i-1][j-1]=1;
 				else imgOutAry[i-1][j-1] = 0;
 			}
 		}
-	}
-	
-	void prettyPrint(int[][] imgOutAry) {
-		outFile.println(numRows + " " + numCols + " " + newMin + " " + newMax);
 		for(int i=0;i<numRows;i++) {
 			for(int j=0;j<numCols;j++) {
-				if(imgOutAry[i][j] > 0)outFile.print(imgOutAry[i][j]);
-				else outFile.print("  ");
+				outFile.print(imgOutAry[i][j]);
 			}
 			outFile.println();			
 		}
 		outFile.close();
+	}
+	
+	void prettyPrint(int[][] imgOutAry) {
+		prettyPrint.println(numRows + " " + numCols + " " + newMin + " " + newMax);
+		for(int i=0;i<numRows;i++) {
+			for(int j=0;j<numCols;j++) {
+				if(imgOutAry[i][j] > 0)prettyPrint.print(imgOutAry[i][j]);
+				else prettyPrint.print("  ");
+			}
+			prettyPrint.println();			
+		}
+		prettyPrint.close();
 	}
 }

@@ -16,14 +16,15 @@ public class Avg3X3Filter {
 		Scanner inFile = new Scanner(new File(argv[0]));	//read in data
 		PrintWriter histogram = new PrintWriter(new FileWriter(argv[2]));	//write to histogram.txt
 		PrintWriter outFile = new PrintWriter(new FileWriter(argv[3]));		//write to Thresholded_image.txt
-
+		PrintWriter prettyPrint = new PrintWriter(new FileWriter(argv[4]));	//write to prettyPrint
+		
 		//retrieve header information
 		numRows = Integer.parseInt(inFile.next());
 		numCols = Integer.parseInt(inFile.next());
 		minVal = Integer.parseInt(inFile.next());
 		maxVal = Integer.parseInt(inFile.next());
 		
-		imageProcessing processor = new imageProcessing(numRows,numCols,minVal,maxVal,inFile,outFile,histogram);
+		imageProcessing processor = new imageProcessing(numRows,numCols,minVal,maxVal,inFile,outFile,prettyPrint,histogram);
 		int[][] imgInAry = new int[numRows][numCols], mirrorFramedAry = new int[numRows+2][numCols+2], tempAry = new int[numRows+2][numCols+2], imgOutAry = new int [numRows][numCols];
 		int[] hist = new int[maxVal+1];
 		int thr_value = Integer.parseInt(argv[1]);
@@ -32,11 +33,12 @@ public class Avg3X3Filter {
 		processor.ComputeHistogram(imgInAry, hist, maxVal);
 		processor.mirrorFramed(numRows, numCols, mirrorFramedAry);
 		processor.computeAVG3X3(mirrorFramedAry, tempAry);
-		processor.computeThreshold(mirrorFramedAry, imgOutAry, thr_value);
+		processor.computeThreshold(tempAry, imgOutAry, thr_value);
 		
 		//print results
 		processor.printHist(hist);
 		processor.prettyPrint (imgOutAry);
+		inFile.close();
 	}
 	
 }
