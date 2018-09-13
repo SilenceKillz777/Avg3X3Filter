@@ -91,10 +91,10 @@ public class imageProcessing {
 		}
 	}
 	
-	void computeThreshold(int[][] mirrorFramedAry, int[][] imgOutAry, int thr_value) {
+	void computeThreshold(int[][] tempAry, int[][] imgOutAry, int thr_value) {
 		for(int i=1;i<numRows+1;i++) {
 			for(int j=1;j<numCols+1;j++) {
-				if(mirrorFramedAry[i][j]>=thr_value)
+				if(tempAry[i][j]>=thr_value)
 					imgOutAry[i-1][j-1]=1;
 				else imgOutAry[i-1][j-1] = 0;
 			}

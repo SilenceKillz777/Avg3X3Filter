@@ -32,7 +32,7 @@ public class Avg3X3Filter {
 		processor.ComputeHistogram(imgInAry, hist, maxVal);
 		processor.mirrorFramed(numRows, numCols, mirrorFramedAry);
 		processor.computeAVG3X3(mirrorFramedAry, tempAry);
-		processor.computeThreshold(mirrorFramedAry, imgOutAry, thr_value);
+		processor.computeThreshold(tempAry, imgOutAry, thr_value);
 		
 		//print results
 		processor.printHist(hist);
